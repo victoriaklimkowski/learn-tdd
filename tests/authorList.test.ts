@@ -2,10 +2,14 @@ import Author from '../models/author'; // Adjust the import to your Author model
 import { getAuthorList } from '../pages/authors'; // Adjust the import to your function
 
 describe('getAuthorList', () => {
+    // Instead of before, reset all after each test
+    // If we were testing the dependency than the before
+    // block would include code to start and connect to the db
     afterEach(() => {
         jest.resetAllMocks();
     });
 
+    // Is async because the calls we are depending on are also async
     it('should fetch and format the authors list correctly', async () => {
         // Define the sorted authors list as we expect it to be returned by the database
         const sortedAuthors = [
@@ -30,7 +34,15 @@ describe('getAuthorList', () => {
         ];
 
         // Mock the find method to chain with sort
+        // returning canned responses
+        // this is an example of a stub
+        // because it will always return an object with sort
+        // MockFind requires Find to be used
+        // you could also change that if you 
+        // wanted to leave it open to use other methods instead
         const mockFind = jest.fn().mockReturnValue({
+            // see 1:24 in recording for a brief explanation of using
+            // something other than sort
             sort: jest.fn().mockResolvedValue(sortedAuthors)
         });
 
@@ -49,6 +61,8 @@ describe('getAuthorList', () => {
         expect(result).toEqual(expectedAuthors);
 
         // Verify that `.sort()` was called with the correct parameters
+        // By creating a spy on the sort method we can check if it was called
+        // with the correct parameters, at least two of them
         expect(mockFind().sort).toHaveBeenCalledWith([['family_name', 'ascending']]);
 
     });
