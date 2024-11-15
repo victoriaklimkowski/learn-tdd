@@ -6,6 +6,8 @@ describe('getAuthorList', () => {
     // If we were testing the dependency than the before
     // block would include code to start and connect to the db
     afterEach(() => {
+        // each new test will create their own mocks
+        // thereby creating independence between tests
         jest.resetAllMocks();
     });
 
@@ -40,14 +42,25 @@ describe('getAuthorList', () => {
         // MockFind requires Find to be used
         // you could also change that if you 
         // wanted to leave it open to use other methods instead
+        // Class 2:
+        // Assign the mock to a JEST object. 
+        // a canned, hard coded response
         const mockFind = jest.fn().mockReturnValue({
-            // see 1:24 in recording for a brief explanation of using
+            // see 1:24 in TDD recording for a brief explanation of using
             // something other than sort
+            // Class 2:
+            // Also a stub
+            // Different from mockReturnedValue becuase it is mongoose
+            // which we know resolves a promise which needs to be resolved
+            // If we want to simulate a negative response we would use
+            // mockRejectedValue
             sort: jest.fn().mockResolvedValue(sortedAuthors)
         });
 
         // Apply the mock directly to the Author model's `find` function
+        // ->For every mock.find in my entity, replace it will mockFind
         Author.find = mockFind;
+        // End of Arrage portion. 
 
         // Act: Call the function to get the authors list
         const result = await getAuthorList();
