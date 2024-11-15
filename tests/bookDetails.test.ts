@@ -15,6 +15,7 @@ describe('showBookDtls', () => {
     ];
 
     beforeEach(() => {
+        // Before each test create a mock response 
         res = {
             status: jest.fn().mockReturnThis(), // Chaining for status
             send: jest.fn()
@@ -31,6 +32,8 @@ describe('showBookDtls', () => {
             populate: jest.fn().mockReturnThis(), // Allows method chaining
             exec: jest.fn().mockResolvedValue(mockBook) // Resolves to your mock book
         });
+        // WE know that findOne will return a populate to get the author information
+        // and execute the query to return a promise (35:47)
         Book.findOne = mockFindOne;
 
         // Mocking the BookInstance model's find and select methods

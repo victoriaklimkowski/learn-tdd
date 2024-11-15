@@ -27,3 +27,4 @@ export const showAllAuthors = async (res: Response): Promise<void> => {
     res.send('No authors found');
   }
 };
+

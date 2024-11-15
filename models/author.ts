@@ -38,12 +38,18 @@ AuthorSchema
 // Virtual for author's lifespan
 AuthorSchema.virtual('lifespan').get(function() {
   var lifetime_string = '';
+  // IF we added an else branch, we wouldn't have 100% branch coverage here
+  // Because we don't have tests for an else branch
   if (this.date_of_birth) {
     lifetime_string = this.date_of_birth.getFullYear().toString();
+  } else {
+    lifetime_string = '';
   }
   lifetime_string += ' - ';
   if (this.date_of_death) {
     lifetime_string += this.date_of_death.getFullYear().toString();
+  } else {
+    lifetime_string += 'present';
   }
   return lifetime_string;
 });
