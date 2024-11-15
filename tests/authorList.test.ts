@@ -71,11 +71,16 @@ describe('getAuthorList', () => {
             'Ghosh, Amitav : 1835 - 1910',
             'Tagore, Rabindranath : 1812 - 1870'
         ];
+        // Expect can be other things than toEqual, like toGreaterThan, etc.
         expect(result).toEqual(expectedAuthors);
 
         // Verify that `.sort()` was called with the correct parameters
         // By creating a spy on the sort method we can check if it was called
         // with the correct parameters, at least two of them
+        // Class 2: Along with the result, ensure that sort was called with these
+        // two parameters
+        // This is an example of a spy
+        // To see if a function was called in a specific way
         expect(mockFind().sort).toHaveBeenCalledWith([['family_name', 'ascending']]);
 
     });
@@ -104,6 +109,8 @@ describe('getAuthorList', () => {
         ];
 
         // Mock the find method to chain with sort
+        // Can try out different kinds of test cases for different 
+        // kinds of return values 
         const mockFind = jest.fn().mockReturnValue({
             sort: jest.fn().mockResolvedValue(sortedAuthors)
         });
