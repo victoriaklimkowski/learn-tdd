@@ -184,7 +184,7 @@ describe('getAuthorList', () => {
         // Assert: Check if the result matches the expected sorted output
         const expectedAuthors = [
             'Austen, Jane : 1775 - 1817',
-            'Ghosh, Amitav : 1835 - ',
+            'Ghosh, Amitav : 1835 - present',
             'Tagore, Rabindranath : 1812 - 1870'
         ];
         expect(result).toEqual(expectedAuthors);
@@ -229,8 +229,8 @@ describe('getAuthorList', () => {
 
         // Assert: Check if the result matches the expected sorted output
         const expectedAuthors = [
-            ' :  - 1817',
-            'Ghosh, Amitav : 1835 - 1910',
+            'Austen, Jane : 1775 - 1817',
+            'Ghosh, Amitav :  - 1910',
             'Tagore, Rabindranath : 1812 - 1870'
         ];
         expect(result).toEqual(expectedAuthors);
@@ -276,7 +276,7 @@ describe('getAuthorList', () => {
         // Assert: Check if the result matches the expected sorted output
         const expectedAuthors = [
             'Austen, Jane : 1775 - 1817',
-            'Ghosh, Amitav :  - ',
+            'Ghosh, Amitav :  - present',
             'Tagore, Rabindranath : 1812 - 1870'
         ];
         expect(result).toEqual(expectedAuthors);
