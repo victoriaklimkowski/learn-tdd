@@ -159,7 +159,7 @@ describe('getAuthorList', () => {
             {
                 first_name: 'Amitav',
                 family_name: 'Ghosh',
-                date_of_birth: new Date('1835-11-30'),
+                date_of_birth: new Date('1976-11-30'),
                 date_of_death: undefined
             },
             {
@@ -184,7 +184,7 @@ describe('getAuthorList', () => {
         // Assert: Check if the result matches the expected sorted output
         const expectedAuthors = [
             'Austen, Jane : 1775 - 1817',
-            'Ghosh, Amitav : 1835 - present',
+            'Ghosh, Amitav : 1976 - present',
             'Tagore, Rabindranath : 1812 - 1870'
         ];
         expect(result).toEqual(expectedAuthors);
@@ -206,7 +206,7 @@ describe('getAuthorList', () => {
                 first_name: 'Amitav',
                 family_name: 'Ghosh',
                 date_of_birth: undefined,
-                date_of_death: new Date('1910-04-21')
+                date_of_death: new Date('1976-11-30')
             },
             {
                 first_name: 'Rabindranath',
@@ -230,7 +230,7 @@ describe('getAuthorList', () => {
         // Assert: Check if the result matches the expected sorted output
         const expectedAuthors = [
             'Austen, Jane : 1775 - 1817',
-            'Ghosh, Amitav :  - 1910',
+            'Ghosh, Amitav :  - 1976',
             'Tagore, Rabindranath : 1812 - 1870'
         ];
         expect(result).toEqual(expectedAuthors);
