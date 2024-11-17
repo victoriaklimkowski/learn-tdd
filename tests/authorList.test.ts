@@ -1,5 +1,5 @@
 import Author from '../models/author'; // Adjust the import to your Author model path
-import { getAuthorList } from '../pages/authors'; // Adjust the import to your function
+import { getAuthorList, showAllAuthors } from '../pages/authors'; // Adjust the import to your function
 
 describe('getAuthorList', () => {
     // Instead of before, reset all after each test
@@ -283,5 +283,80 @@ describe('getAuthorList', () => {
 
         // Verify that `.sort()` was called with the correct parameters
         expect(mockFind().sort).toHaveBeenCalledWith([['family_name', 'ascending']]);
+    });
+
+    // TEST showAllAuthors
+    it('should send the author list when data is available', async () => {
+        // // Mock the getAuthorList function to return a list of authors
+        // const mockGetAuthorList = jest.fn().mockResolvedValue([
+        //     'Austen, Jane : 1775 - 1817',
+        //     'Ghosh, Amitav : 1835 - 1910',
+        //     'Tagore, Rabindranath : 1812 - 1870'
+        // ]);
+        // Mock the getAuthorList function to return a list of authors
+        const mockGetAuthorList = jest
+        .spyOn(require('../pages/authors'), 'getAuthorList')
+        .mockResolvedValue([
+            'Austen, Jane : 1775 - 1817',
+            'Ghosh, Amitav : 1835 - 1910',
+            'Tagore, Rabindranath : 1812 - 1870'
+        ]);
+        
+        // Arrange: Mock the response object
+        const mockSend = jest.fn();
+        const mockRes = { send: mockSend };
+
+        // Act: Call the function to show all authors
+        await showAllAuthors(mockRes as any);
+
+        // Assert: Check if the response was sent with the correct data
+        expect(mockSend).toHaveBeenCalledWith([
+            'Austen, Jane : 1775 - 1817',
+            'Ghosh, Amitav : 1835 - 1910',
+            'Tagore, Rabindranath : 1812 - 1870'
+        ]);
+
+        // Verify that getAuthorList was called
+        expect(mockGetAuthorList).toHaveBeenCalled();
+    });
+
+    it('should send a message when no authors are found', async () => {
+        // Mock the getAuthorList function to return an empty list
+        const mockGetAuthorList = jest
+        .spyOn(require('../pages/authors'), 'getAuthorList')
+        .mockResolvedValue([]);
+
+        // Arrange: Mock the response object
+        const mockSend = jest.fn();
+        const mockRes = { send: mockSend };
+
+        // Act: Call the function to show all authors
+        await showAllAuthors(mockRes as any);
+
+        // Assert: Check if the response was sent with the correct message
+        expect(mockSend).toHaveBeenCalledWith('No authors found');
+
+        // Verify that getAuthorList was called
+        expect(mockGetAuthorList).toHaveBeenCalled();
+    });
+
+    it('should send a message when an error occurs', async () => {
+        // Mock the getAuthorList function to throw an error
+        const mockGetAuthorList = jest
+        .spyOn(require('../pages/authors'), 'getAuthorList')
+        .mockRejectedValue(new Error('Database error'));
+
+        // Arrange: Mock the response object
+        const mockSend = jest.fn();
+        const mockRes = { send: mockSend };
+
+        // Act: Call the function to show all authors
+        await showAllAuthors(mockRes as any);
+
+        // Assert: Check if the response was sent with the correct message
+        expect(mockSend).toHaveBeenCalledWith('No authors found');
+
+        // Verify that getAuthorList was called
+        expect(mockGetAuthorList).toHaveBeenCalled();
     });
 });
